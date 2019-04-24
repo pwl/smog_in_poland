@@ -4,3 +4,4 @@ bokeh
 pandas_bokeh
 cufflinks
 jupyter
+tables
