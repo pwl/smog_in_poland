@@ -1,7 +1,5 @@
 pandas
 tqdm
-zipfile
-urllib
 bokeh
 pandas_bokeh
 cufflinks
