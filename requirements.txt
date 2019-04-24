@@ -3,5 +3,5 @@ tqdm
 bokeh
 pandas_bokeh
 cufflinks
-jupyterlabg
+jupyterlab
 tables
