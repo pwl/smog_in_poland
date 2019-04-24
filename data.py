@@ -181,6 +181,8 @@ def to_dataframe(xls_file, metadata):
     df = df.loc[:, ~df.columns.duplicated()]
     df = convert_to_float(df)
     df.drop(df.columns[df.columns.isnull()], axis=1, inplace=True)
+    df.drop(df.columns[df.isnull().all()], axis=1, inplace=True)
+    df.drop(df.index[df.isnull().all(1)], inplace=True)
     return df
 
 
@@ -214,11 +216,10 @@ def xlsx_to_hdf(
     metadata.to_hdf(hdf_file, "metadata", complevel=5)
 
 
-# download_raw_data(cleanup=False)
-
-metadata = get_metadata(cleanup=False)
-if hdf_file.exists():
-    hdf_file.unlink()
-xlsx_to_hdf(metadata)
-# xlsx_to_hdf(metadata, interval=1)
-# pd.read_hdf(hdf_file, "24g/PM2.5")
+def prepare_hdf5(hdf_file=hdf_file):
+    metadata = get_metadata(cleanup=False)
+    download_raw_data(cleanup=False)
+    if hdf_file.exists():
+        hdf_file.unlink()
+    xlsx_to_hdf(metadata)
+    xlsx_to_hdf(metadata, interval=1)
