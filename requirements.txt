@@ -1,0 +1,7 @@
+pandas
+tqdm
+bokeh
+pandas_bokeh
+cufflinks
+jupyterlab
+tables

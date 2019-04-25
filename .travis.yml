@@ -1,0 +1,17 @@
+language: python
+python:
+  - "3.6"
+install:
+  - pip install numpy
+  - pip install -r requirements.txt
+  - jupyter labextension install jupyterlab_bokeh @jupyterlab/plotly-extension
+script:
+  - find notebooks -name "*.ipynb" | xargs jupyter nbconvert --no-prompt --to html --ExecutePreprocessor.timeout=600 --execute
+
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN
+  keep-history: false
+  on:
+    branch: master
