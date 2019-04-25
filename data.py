@@ -165,7 +165,11 @@ alternative names in this special case.
 def convert_to_float(df):
     """Cleans up the values by converting the commas to dots and casting the
 results to the float32 type"""
-    return df.apply(lambda x: x.str.replace(",", ".").astype("float32"))
+    return df.apply(
+        lambda x: pd.to_numeric(
+            x.astype(str).str.replace(",", "."), errors="coerce", downcast="float"
+        ).astype("float16")
+    )
 
 
 def to_dataframe(xls_file, metadata):
@@ -221,5 +225,8 @@ def prepare_hdf5(hdf_file=hdf_file):
     download_raw_data(cleanup=False)
     if hdf_file.exists():
         hdf_file.unlink()
-    xlsx_to_hdf(metadata)
+    xlsx_to_hdf(metadata, hdf_file=hdf_file)
     xlsx_to_hdf(metadata, interval=1)
+
+
+prepare_hdf5()
