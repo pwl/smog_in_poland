@@ -185,8 +185,7 @@ def to_dataframe(xls_file, metadata):
     df = df.loc[:, ~df.columns.duplicated()]
     df = convert_to_float(df)
     df.drop(df.columns[df.columns.isnull()], axis=1, inplace=True)
-    df.drop(df.columns[df.isnull().all()], axis=1, inplace=True)
-    df.drop(df.index[df.isnull().all(1)], inplace=True)
+    df.dropna([0, 1], "all", inplace=True)
     return df
 
 
